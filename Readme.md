@@ -137,3 +137,6 @@ Response
 ```js
 80
 ```
+
+### Logger screenshot
+![Screenshot 2024-07-10 at 21.55.11.png](..%2F..%2FDesktop%2FScreenshot%202024-07-10%20at%2021.55.11.png)

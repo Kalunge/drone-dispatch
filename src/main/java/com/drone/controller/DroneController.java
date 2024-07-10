@@ -3,9 +3,8 @@ package com.drone.controller;
 import com.drone.dto.DroneDto;
 import com.drone.dto.MedicationDto;
 import com.drone.model.Drone;
-import com.drone.model.Medication;
 import com.drone.service.DroneService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +13,9 @@ import java.util.List;
 @RequestMapping("/api/drones")
 public class DroneController {
     private final DroneService droneService;
+
+
+
     public DroneController(DroneService droneService) {
         this.droneService = droneService;
     }
@@ -34,8 +36,13 @@ public class DroneController {
     }
 
     @PostMapping("/{droneId}/medications")
-    public void loadMedications(@PathVariable Long droneId, @RequestBody List<MedicationDto> medications) throws Exception {
-        droneService.loadMedications(droneId, medications);
+    public ResponseEntity<Object> loadMedications(@PathVariable Long droneId, @RequestBody List<MedicationDto> medications) throws Exception {
+        try {
+            droneService.loadMedications(droneId, medications);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{droneId}/battery")

@@ -3,6 +3,9 @@ package com.drone.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+import com.drone.dto.DroneDto;
+import com.drone.enums.Model;
+import com.drone.enums.State;
 import com.drone.model.Drone;
 import com.drone.repository.DroneRepository;
 import com.drone.repository.MedicationRepository;
@@ -11,6 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -41,8 +47,9 @@ class DroneServiceTest {
 
     @Test
     void getAvailableDrones() {
-        //todo Add test cases for fetching available drones
+        //Todo
     }
+
 
     @Test
     void getLoadedMedications() {
