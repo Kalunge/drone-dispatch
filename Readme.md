@@ -11,7 +11,7 @@ Prerequisites
 
 ```js
 git clone git@github.com:Kalunge/drone-dispatch.git
-cd drone-dispatc
+cd drone-dispatch
 ```
 
 ### Start the Database (PostgreSQL)
