@@ -1,5 +1,7 @@
 package com.drone.controller;
 
+import com.drone.dto.DroneDto;
+import com.drone.dto.MedicationDto;
 import com.drone.model.Drone;
 import com.drone.model.Medication;
 import com.drone.service.DroneService;
@@ -22,17 +24,17 @@ public class DroneController {
     }
 
     @GetMapping("/available")
-    public List<Drone> getAvailableDrones() {
+    public List<DroneDto> getAvailableDrones() {
         return droneService.getAvailableDrones();
     }
 
     @GetMapping("/{droneId}/medications")
-    public List<Medication> getLoadedMedications(@PathVariable Long droneId) {
+    public List<MedicationDto> getLoadedMedications(@PathVariable Long droneId) {
         return droneService.getLoadedMedications(droneId);
     }
 
     @PostMapping("/{droneId}/medications")
-    public void loadMedications(@PathVariable Long droneId, @RequestBody List<Medication> medications) throws Exception {
+    public void loadMedications(@PathVariable Long droneId, @RequestBody List<MedicationDto> medications) throws Exception {
         droneService.loadMedications(droneId, medications);
     }
 

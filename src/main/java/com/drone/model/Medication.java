@@ -2,8 +2,14 @@ package com.drone.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
 public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +29,19 @@ public class Medication {
     @ManyToOne
     @JoinColumn(name = "drone_id")
     private Drone drone;
+
+    public Medication(String name, int weight, String code, String image, Drone drone) {
+        this.name = name;
+        this.weight = weight;
+        this.code = code;
+        this.image = image;
+        this.drone = drone;
+    }
+
+    public Medication() {
+
+    }
+
 
     public Long getId() {
         return id;

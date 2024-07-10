@@ -1,15 +1,20 @@
 package com.drone.service;
 
 
+import com.drone.ResourceNotFoundException;
+import com.drone.dto.DroneDto;
+import com.drone.dto.MedicationDto;
 import com.drone.enums.State;
 import com.drone.model.Drone;
 import com.drone.model.Medication;
 import com.drone.repository.DroneRepository;
 import com.drone.repository.MedicationRepository;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DroneService {
@@ -26,46 +31,61 @@ public class DroneService {
         return droneRepository.save(drone);
     }
 
-    public List<Drone> getAvailableDrones() {
-        return droneRepository.findByState(State.IDLE);
+    public List<DroneDto> getAvailableDrones() {
+
+        return droneRepository.findByState(State.IDLE).stream()
+                .map(drone -> new DroneDto(
+                        drone.getId(),
+                        drone.getSerialNumber(),
+                        drone.getModel().name(),
+                        drone.getWeightLimit(),
+                        drone.getBatteryCapacity(),
+                        drone.getState().name(),
+                        drone.getMedications().stream()
+                                .map(medication -> new MedicationDto(
+                                        medication.getId(),
+                                        medication.getName(),
+                                        medication.getWeight(),
+                                        medication.getCode(),
+                                        medication.getImage(),
+                                        drone.getSerialNumber()))
+                                .collect(Collectors.toList())))
+                .collect(Collectors.toList());
     }
 
-    public List<Medication> getLoadedMedications(Long droneId) {
-        Optional<Drone> drone = droneRepository.findById(droneId);
-        return drone.map(Drone::getMedications).orElse(null);
+    public List<MedicationDto> getLoadedMedications(Long droneId) {
+        return droneRepository.findById(droneId)
+                .map(drone -> drone.getMedications().stream()
+                        .map(medication -> new MedicationDto(
+                                medication.getId(),
+                                medication.getName(),
+                                medication.getWeight(),
+                                medication.getCode(),
+                                medication.getImage(),
+                                drone.getSerialNumber()))
+                        .collect(Collectors.toList()))
+                .orElseThrow(() -> new ResourceNotFoundException("Drone not found"));
     }
 
     public Drone getDroneById(Long droneId) {
         return droneRepository.findById(droneId).orElse(null);
     }
 
-    public void loadMedications(Long droneId, List<Medication> medications) throws Exception {
-        Drone drone = getDroneById(droneId);
+    public void loadMedications(Long droneId, List<MedicationDto> medicationDtos) {
+        Drone drone = droneRepository.findById(droneId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drone not found"));
 
-        if (drone == null) {
-            throw new Exception("Drone not found");
-        }
+        List<Medication> medications = medicationDtos.stream()
+                .map(dto -> new Medication(dto.getName(), dto.getWeight(), dto.getCode(), dto.getImage(), drone))
+                .collect(Collectors.toList());
 
-        if (drone.getBatteryCapacity() < 25) {
-            throw new Exception("Battery level is below 25%");
-        }
-
-        int totalWeight = medications.stream().mapToInt(Medication::getWeight).sum();
-        if (totalWeight > drone.getWeightLimit()) {
-            throw new Exception("Total weight exceeds the drone's weight limit");
-        }
-
-        for (Medication medication : medications) {
-            medication.setDrone(drone);
-            medicationRepository.save(medication);
-        }
-
-        drone.setState(State.LOADED);
+        drone.setMedications(medications);
         droneRepository.save(drone);
     }
 
     public int getDroneBatteryLevel(Long droneId) {
-        Drone drone = getDroneById(droneId);
-        return drone != null ? drone.getBatteryCapacity() : 0;
+        Drone drone = droneRepository.findById(droneId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drone not found"));
+        return drone.getBatteryCapacity();
     }
 }
