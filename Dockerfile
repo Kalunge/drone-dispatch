@@ -17,7 +17,7 @@ COPY docker .
 RUN ./gradlew clean build -x test
 
 # Expose port 9000 (adjust as per your application's needs)
-EXPOSE 9000
+EXPOSE 8080
 
 # Command to run the jar file
 CMD ["java", "-jar", "./build/libs/drone.jar"]

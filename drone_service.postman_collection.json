@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "3c714a03-70af-42f3-a86a-8795564a5a33",
+		"name": "drone_service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10343664"
+	},
+	"item": [
+		{
+			"name": "Register Drone",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"serialNumber\": \"DRONE1\",\n    \"model\": \"MIDDLEWEIGHT\",\n    \"weightLimit\": 400,\n    \"batteryCapacity\": 80,\n    \"state\": \"IDLE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Available drones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/available",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Drone Battery",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/available",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"available"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Drone Medications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/drones/1/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"1",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Load Medications",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"name\": \"Medication A\",\n        \"weight\": 0.1,\n        \"code\": \"CODE001\",\n        \"image\": \"url_to_image\"\n    },\n    {\n        \"name\": \"Medication B\",\n        \"weight\": 0.2,\n        \"code\": \"CODE002\",\n        \"image\": \"url_to_image\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/drones/1/medications",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"drones",
+						"1",
+						"medications"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
