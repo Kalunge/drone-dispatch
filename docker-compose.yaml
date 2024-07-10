@@ -1,0 +1,11 @@
+services:
+  db_service:
+    image: postgres:latest
+    container_name: drone_service_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: drone_service
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: drone_service_local_db
+    ports:
+      - "5435:5432"
