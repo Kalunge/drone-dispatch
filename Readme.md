@@ -1,12 +1,19 @@
 # Drone Dispatch Service
 This service manages drones and their associated medications for delivery.
+
 Prerequisites
 * Docker
 * Docker Compose
-* Java 11
+* Java 17
 * Gradle
 
 ## Getting Started
+
+```js
+git clone git@github.com:Kalunge/drone-dispatch.git
+cd drone-dispatc
+```
+
 ### Start the Database (PostgreSQL)
 1. Make sure Docker is installed. Run the following command in the project directory to start the PostgreSQL database using Docker Compose:
 ```
@@ -38,7 +45,7 @@ Reqeust Body
 
 ```
 
-Response
+* Response
 
 ```js
 {
@@ -51,9 +58,9 @@ Response
 }
 
 ```
-Load Medications to Drone
-URL: POST /drones/{droneId}/medications
-Request:
+### Load Medications to Drone
+### URL: POST /drones/{droneId}/medications
+* Request:
 ```js
 [
   {
@@ -71,10 +78,10 @@ Request:
 ]
 
 ```
-Response: No content (204 No Content)
-Get Loaded Medications of a Drone
-URL: GET /drones/{droneId}/medications
-Response
+* Response: No content (204 No Content)
+###  Get Loaded Medications of a Drone
+### URL: GET /drones/{droneId}/medications
+* Response
 
 Response:
 ```js
@@ -124,9 +131,9 @@ Response
 
 ```
 
-Get Drone Battery Level
-URL: GET /drones/{droneId}/battery
-Response:
+### Get Drone Battery Level
+### URL: GET /drones/{droneId}/battery
+* Response:
 ```js
 80
 ```
