@@ -11,8 +11,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/drones")
 public class DroneController {
-    @Autowired
-    private DroneService droneService;
+    private final DroneService droneService;
+    public DroneController(DroneService droneService) {
+        this.droneService = droneService;
+    }
 
     @PostMapping
     public Drone registerDrone(@RequestBody Drone drone) {

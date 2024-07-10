@@ -6,7 +6,6 @@ import com.drone.model.Drone;
 import com.drone.model.Medication;
 import com.drone.repository.DroneRepository;
 import com.drone.repository.MedicationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +13,14 @@ import java.util.Optional;
 
 @Service
 public class DroneService {
-    @Autowired
-    private DroneRepository droneRepository;
+    private final DroneRepository droneRepository;
 
-    @Autowired
-    private MedicationRepository medicationRepository;
+    private final MedicationRepository medicationRepository;
+
+    public DroneService(DroneRepository droneRepository, MedicationRepository medicationRepository) {
+        this.droneRepository = droneRepository;
+        this.medicationRepository = medicationRepository;
+    }
 
     public Drone registerDrone(Drone drone) {
         return droneRepository.save(drone);
